@@ -1,0 +1,36 @@
+{
+  "name": "svelte-to-vue-loader",
+  "version": "1.0.0-beta.1",
+  "description": "Svelte adapter for Vue 2",
+  "author": "Ambit Tsai <ambit_tsai@qq.com>",
+  "license": "Apache-2.0",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node example/start.js",
+    "test": "mochapack --webpack-config test/webpack.config.js --require test/setup.js test/**/*.spec.js"
+  },
+  "devDependencies": {
+    "@babel/traverse": "^7.14.2",
+    "@vue/test-utils": "^1.2.0",
+    "expect": "^27.0.2",
+    "html-webpack-plugin": "^5.3.1",
+    "istanbul-instrumenter-loader": "^3.0.1",
+    "jsdom": "^16.6.0",
+    "jsdom-global": "^3.0.2",
+    "mocha": "^8.4.0",
+    "mochapack": "^2.1.2",
+    "nyc": "^15.1.0",
+    "svelte": "^3.38.2",
+    "svelte-loader": "^3.1.1",
+    "vue": "^2.6.11",
+    "vue-loader": "^15.9.7",
+    "vue-template-compiler": "^2.6.11",
+    "webpack": "^5.38.1",
+    "webpack-cli": "^4.7.2",
+    "webpack-dev-server": "^3.11.2",
+    "webpack-node-externals": "^3.0.0"
+  },
+  "peerDependencies": {
+    "@babel/traverse": ">=7"
+  }
+}

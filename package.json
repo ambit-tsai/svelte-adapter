@@ -1,0 +1,9 @@
+{
+  "name": "svelte-adapter",
+  "description": "Svelte adapter",
+  "author": "Ambit Tsai <ambit_tsai@qq.com>",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "lerna": "^4.0.0"
+  }
+}
