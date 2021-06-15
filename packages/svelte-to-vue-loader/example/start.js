@@ -3,6 +3,7 @@ const ROOT = path.resolve(__dirname, './')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const webpack = require('webpack')
+const WebpackDevServer = require('webpack-dev-server')
 
 
 const compiler = webpack({
@@ -29,31 +30,26 @@ const compiler = webpack({
             },
         ],
     },
-    resolve: {
-        // // see below for an explanation
-        // alias: {
-        //     svelte: path.resolve('node_modules', 'svelte'),
-        // },
-        // extensions: ['.mjs', '.js', '.svelte'],
-        // mainFields: ['svelte', 'browser', 'module', 'main']
-    },
     plugins: [
         new VueLoaderPlugin(),
         new HtmlWebpackPlugin({
             template: `${ROOT}/index.html`,
         }),
     ],
-    devServer: {
-        hot: true,
-        open: true,
-    },
 })
 
 
-compiler.run((err, stats) => {
+const server = new WebpackDevServer(compiler, {
+    transportMode: 'ws',
+    open: true,
+    hot: true,
+})
+
+const PORT = 8080
+const HOST = '127.0.0.1'
+
+server.listen(PORT, HOST, err => {
     if (err) {
         console.log(err)
-    } else if (stats.hasErrors()) {
-        console.log(stats.compilation.errors)
     }
 })
