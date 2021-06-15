@@ -25,7 +25,7 @@ function createVueComponent(SvelteComponent) {
         name,
         props,
         render() {
-            return this._e(name)    // create a comment VNode
+            return this._vnode || this._e(name)     // create a comment VNode 
         },
         mounted() {
             const vm = this
