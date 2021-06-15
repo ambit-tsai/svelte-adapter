@@ -47,6 +47,7 @@ function createVueComponent(SvelteComponent) {
             addEventListeners(vm, component)
         },
         updated() {
+            // TODO: fine-grained update
             this.__s.$set({ $$scope: { dirty: this } })
         },
         beforeDestroy() {
@@ -71,10 +72,12 @@ function createSvelteSlots(vm) {
                 root.elm = target
                 root.children = vm.$slots[key]
                 this._root = root
+                const fragment = document.createDocumentFragment()
                 for (const vnode of root.children) {
                     vm.__patch__(null, vnode)   // create element by VNode
-                    insert(target, vnode.elm, anchor)
+                    fragment.appendChild(vnode.elm)
                 }
+                insert(target, fragment, anchor)
             },
             /**
              * Update
