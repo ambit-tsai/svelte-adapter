@@ -31,6 +31,7 @@
     "webpack-node-externals": "^3.0.0"
   },
   "peerDependencies": {
-    "@babel/traverse": ">=7"
+    "@babel/traverse": ">=7",
+    "vue": ">=2.5"
   }
 }
