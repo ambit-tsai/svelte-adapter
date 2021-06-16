@@ -45,14 +45,20 @@ function createVueComponent(SvelteComponent) {
             vm.__s = component
             watchProps(vm, component)
             addEventListeners(vm, component)
+            vm.observer = observeDomMutation(vm, component)
         },
         updated() {
             // TODO: fine-grained update
             this.__s.$set({ $$scope: { dirty: this } })
         },
         beforeDestroy() {
-            this.__s.$destroy()
-            delete this.__s
+            const vm = this
+            if (vm.observer) {
+                vm.observer.disconnect()
+                delete vm.observer
+            }
+            vm.__s.$destroy()
+            delete vm.__s
         },
     }
 }
@@ -122,4 +128,35 @@ function addEventListeners(vm, component) {
             vm.$emit(key, detail)
         })
     }
+}
+
+
+function observeDomMutation({ $el }, { $$ }) {
+    if (!window.MutationObserver) {
+        console.warn('[svelte-to-vue-loader] you need a MutationObserver polyfill')
+        return
+    }
+    const observer = new MutationObserver(records => {
+        const { parentNode } = $el
+        if (records.length && records[0].target !== parentNode) {
+            observer.disconnect()
+            $$.fragment.m(parentNode, $el)
+            observer.observe(parentNode, {
+                childList: true,
+            })
+            return
+        }
+        for (const { addedNodes } of records) {
+            for (let i = addedNodes.length - 1; i >= 0; --i) {
+                if (addedNodes[i] === $el) {
+                    $$.fragment.m(parentNode, $el)
+                    return
+                }
+            }
+        }
+    })
+    observer.observe($el.parentNode, {
+        childList: true,
+    })
+    return observer
 }
