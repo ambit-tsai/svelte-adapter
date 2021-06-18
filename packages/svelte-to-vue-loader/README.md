@@ -11,8 +11,8 @@
 |v-else|✔️||
 |v-else-if|✔️||
 |v-slot|✔️||
+|v-for|✔️||
 |v-once|✔️||
-|v-for|➖|Wrap component in `<div>`|
 |v-show|➖|Wrap component in `<div>`|
 |v-cloak|➖|Wrap component in `<div>`|
 |v-pre|❌||
@@ -27,6 +27,7 @@
 
 <script>
 import Child from './Child.svelte'
+
 export default {
     components: {
         Child,
